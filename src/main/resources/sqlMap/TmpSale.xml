@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.dity.poi.dao.TmpSaleDao">
+
+	<insert id="insertBatch" parameterType="list">
+		INSERT into tmp_sale(employee_no,idno) values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.employeeNo},#{item.idno})
+		</foreach>
+	</insert>
+
+	<select id="queryResult" resultType="map">
+		SELECT sa.idno ts.employee_no
+		FROM  sa_sale_info sa
+		LEFT JOIN tmp_sale ts on ts.idno=sa.idno
+	</select>
+
+	<select id="queryAll" resultType="com.dity.poi.pojo.TmpSale">
+		SELECT  employee_no employeeNo,idno idno from tmp_sale
+	</select>
+</mapper>
